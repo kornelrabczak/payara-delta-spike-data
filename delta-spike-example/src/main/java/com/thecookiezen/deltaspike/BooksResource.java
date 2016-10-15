@@ -10,7 +10,7 @@ public class BooksResource {
     @GET
     @Path("{id}")
     public String getTitleById(@PathParam("id") int id) {
-        return "dupa " + id;
+        return "test " + id;
     }
 
 }
