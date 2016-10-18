@@ -5,14 +5,17 @@ import org.apache.deltaspike.data.api.Query;
 import org.apache.deltaspike.data.api.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BooksRepository extends EntityRepository<Book, Long> {
 
     List<Book> findByTitle(String title);
 
-    List<Book> findByTitleAndAuthorAndOrderByCreatedDesc(String title, String author);
+    List<Book> findByTitleAndAuthor(String title, String author);
+
+    List<Book> findByTitleAndAuthorOrderByCreatedDesc(String title, String author);
 
     @Query("select b from Book b where b.isbn = ?1")
-    Book findByISBNNumber(String ISBN);
+    Optional<Book> findByISBNNumber(String ISBN);
 }

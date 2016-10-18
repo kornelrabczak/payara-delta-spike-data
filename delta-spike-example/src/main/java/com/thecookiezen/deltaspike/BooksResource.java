@@ -11,12 +11,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 
 @Path("book")
 public class BooksResource {
 
     @Inject
-    BooksRepository booksRepository;
+    private BooksRepository booksRepository;
 
     @GET
     @Path("/{title}")
@@ -28,8 +29,8 @@ public class BooksResource {
     @GET
     @Path("/{author}/{title}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Book> getByTitle(@PathParam("author") String author, @PathParam("title") String title) {
-        return booksRepository.findByTitleAndAuthorAndOrderByCreatedDesc(title, author);
+    public List<Book> getByAuthorAndTitle(@PathParam("author") String author, @PathParam("title") String title) {
+        return booksRepository.findByTitleAndAuthorOrderByCreatedDesc(title, author);
     }
 
     @GET
@@ -43,7 +44,11 @@ public class BooksResource {
     @Path("/isbn/{isbn}")
     @Produces(MediaType.APPLICATION_JSON)
     public Book getByIsbn(@PathParam("isbn") String isbn) {
-        return booksRepository.findByISBNNumber(isbn);
+        Optional<Book> byISBNNumber = booksRepository.findByISBNNumber(isbn);
+        if (byISBNNumber.isPresent())
+            return byISBNNumber.get();
+
+        return new Book();
     }
 
     @GET

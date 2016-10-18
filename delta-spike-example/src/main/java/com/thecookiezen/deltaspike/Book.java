@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.Instant;
+import java.util.Date;
 
 @Entity
 public class Book {
@@ -19,7 +19,7 @@ public class Book {
 
     private String author;
 
-    private Instant created = Instant.now();
+    private Date created = new Date();
 
     public Long getId() {
         return id;
@@ -37,7 +37,7 @@ public class Book {
         this.title = title;
     }
 
-    public Instant getCreated() {
+    public Date getCreated() {
         return created;
     }
 
